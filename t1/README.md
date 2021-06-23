@@ -16,6 +16,8 @@ Esse algoritmo divide a janela de valores possíveis (0 a 255) em n pedaços. Ca
 
 #### Kernel Canvas
 
+#### One-hot-encoding
+
 #### Niblack and Sauvola
 O limiar de Niblack e Sauvola compreende a implementação de limiares locais. Ao invés de calcular um limiar global para toda a imagem, vários limiares locais são calculados para cada pixel utilizando fórmulas que levam em conta a média e variância da vizinhança (definida por uma janela centrada ao redor do pixel).
 [https://scikit-image.org/docs/dev/auto_examples/segmentation/plot_niblack_sauvola.html]

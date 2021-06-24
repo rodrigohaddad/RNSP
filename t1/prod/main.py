@@ -1,6 +1,8 @@
+from db import *
 from utils import *
 
 import json
+from sys import argv
 import wisardpkg as wp
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import StratifiedKFold, train_test_split
@@ -61,6 +63,10 @@ class Gym:
     @property
     def trained(self):
         return self._trained
+
+    @property
+    def config(self):
+        return self._config
 
     def train(self, X_train: list, y_train: list) -> None:
         """Trains a brand new Wisard model"""
@@ -144,5 +150,11 @@ class Gym:
 
 
 if __name__ == "__main__":
-    g = Gym("run_config.json")
-    print(g.train_with_kfold(verbose=True))
+    try:
+        config_file_path: str = argv[1]
+    except IndexError:
+        raise IndexError("Please provide the path to the configuration file")
+    db = DBManager()
+    g = Gym(config_file_path)
+    acc = g.train_with_kfold()
+    db.add_train_result(g.config, acc)

@@ -1,4 +1,7 @@
-wisardpkg==1.6.3
 numpy==1.21.0
+SQLAlchemy==1.4.19
+wisardpkg==1.6.3
 numba==0.53.1
 scikit_learn==0.24.2
+sqlalchemy-utils==0.37.7
+psycopg2-binary

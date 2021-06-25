@@ -10,7 +10,7 @@ DEFAULT_WSD_IGNORE_ZERO = False
 DEFAULT_WSD_VERBOSE = False
 
 # Parameters
-BINARIZATION_OPTIONS = ["threshold", "thermometer", "circular_thermometer"]
+BINARIZATION_OPTIONS = ["threshold"]
 BINARIZATION_THRESHOLDS = [32, 64, 128, 192]
 BINARIZATION_RESOLUTIONS = [16, 32, 64]
 ADDRESS_SIZES = [20]

@@ -2,3 +2,6 @@ wisardpkg==1.6.3
 numpy==1.21.0
 numba==0.53.1
 scikit_learn==0.24.2
+matplotlib==3.4.2
+scikit-image==0.18.1
+requests==2.25.1

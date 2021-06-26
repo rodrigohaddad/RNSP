@@ -3,7 +3,7 @@ from encoders import ThermometerEncoder, CircularThermometerEncoder
 from os import path
 
 import numpy as np
-
+from skimage.filters import threshold_niblack, threshold_sauvola
 
 def load_data() -> tuple:
     """Loads train and test data"""
@@ -35,3 +35,21 @@ class Binarizer():
         therm = CircularThermometerEncoder(
             maximum=maximum, minimum=minimum, resolution=resolution)
         return [therm.encode(x).flatten() for x in arr]
+
+    def sauvola(self, arr: np.ndarray, window_size: int = 11) -> list:
+        bin_imgs = list()
+        for x in arr:
+            thresh_s = threshold_sauvola(x, window_size=window_size)
+            binary_s = np.array( x > thresh_s, dtype=int)
+            bin_imgs.append(binary_s.flatten())
+        return bin_imgs
+
+    def niblack(self, arr: np.ndarray, window_size: int = 11, k: float = 0.8) -> list:
+        bin_imgs = list()
+        for x in arr:
+            thresh_n = threshold_niblack(x, window_size=window_size, k=k)
+            binary_n = np.array( x > thresh_n, dtype=int)
+            bin_imgs.append(binary_n.flatten())
+        return bin_imgs
+    
+

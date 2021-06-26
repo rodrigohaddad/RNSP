@@ -10,9 +10,10 @@ DEFAULT_WSD_IGNORE_ZERO = False
 DEFAULT_WSD_VERBOSE = False
 
 # Parameters
-BINARIZATION_OPTIONS = ["threshold"]
+BINARIZATION_OPTIONS = ["threshold", "sauvola", "niblack", "thermometer", "circular_thermometer"]
 BINARIZATION_THRESHOLDS = [32, 64, 128, 192]
 BINARIZATION_RESOLUTIONS = [16, 32, 64]
+NS_WINDOW = [3, 5, 7, 9, 11]
 ADDRESS_SIZES = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 WSD_CLUSTER = [True, False]
 
@@ -34,6 +35,7 @@ base_cfg = {
     "clus_min_score": 0.1,
     "clus_threshold": 0,
     "clus_discriminator_limit": 0,
+    "ns_window": 3,
 }
 
 
@@ -71,6 +73,32 @@ for binarization_option in BINARIZATION_OPTIONS:
         for binarization_resolution in BINARIZATION_RESOLUTIONS:
             for address_size in ADDRESS_SIZES:
                 for wsd_clus in WSD_CLUSTER:
+                    cfg = deepcopy(base_cfg)
+                    cfg["wsd_cluster"] = wsd_clus
+                    cfg["binarization"] = binarization_option
+                    cfg["binarization_threshold"] = binarization_threshold
+                    cfg["wsd_address_size"] = address_size
+                    if wsd_clus:   
+                        for clus_t in CLUS_THRESHOLD:
+                           for clus_d in CLUS_DISCRIMINATOR_LIMIT: 
+                               for clus_m in CLUS_MIN_SCORE:
+                                   cfg["clus_min_score"] = clus_m
+                                   cfg["clus_threshold"] = clus_t
+                                   cfg["clus_discriminator_limit"] = clus_d
+                                   save_config(i, cfg)
+                                   i += 1
+                    else:
+                        save_config(i, cfg)
+                        i += 1
+    elif binarization_option in ["sauvola", "niblack"]:
+        for window_size in NS_WINDOW:
+            for address_size in ADDRESS_SIZES:
+                for wsd_clus in WSD_CLUSTER:
+                    cfg = deepcopy(base_cfg)
+                    cfg["wsd_cluster"] = wsd_clus
+                    cfg["binarization"] = binarization_option
+                    cfg["ns_window"] = window_size
+                    cfg["wsd_address_size"] = address_size
                     if wsd_clus:   
                         for clus_t in CLUS_THRESHOLD:
                            for clus_d in CLUS_DISCRIMINATOR_LIMIT: 

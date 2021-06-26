@@ -90,6 +90,28 @@ class Gym:
         # Set trained flag
         self._trained = True
 
+    def train_cluster(self, X_train: list, y_train: list) -> None:
+        """Trains a brand new Wisard Cluster model"""
+
+        # Reset trained flag
+        self._trained = False
+
+        # Build Wisard model
+        try:
+            address_size=self._config["clus_address_size"]
+            min_score=self._config["clus_min_score"]
+            threshold=self._config["clus_threshold"]
+            discriminator_limit=self._config["clus_discriminator_limit"]
+            self._model = wp.ClusWisard(address_size, min_score, threshold, discriminator_limit)
+        except Exception as e:
+            print(f"Fail on building wisard cluster model: {e}")
+
+        # Train model
+        self._model.train(X_train, y_train)
+
+        # Set trained flag
+        self._trained = True
+
     def predict(self, X: list) -> list:
         """Makes classification for model"""
         if not self._trained:
@@ -103,7 +125,10 @@ class Gym:
 
     def train_full(self) -> None:
         """Trains using full train set"""
-        self.train(self.X_train_binary, self.y_train)
+        if self._config.get('wsd_cluster'):
+            self.train_cluster(self.X_train_binary, self.y_train)
+        else:
+            self.train(self.X_train_binary, self.y_train)
 
     def train_with_split(self, validation_split: float = None) -> float:
         """Trains using `validation_split` percentage of train set 
@@ -116,7 +141,10 @@ class Gym:
             self.X_train_binary, self.y_train, test_size=validation_split, random_state=self._config["random_seed"])
 
         # Train model
-        self.train(X_train, y_train)
+        if self._config.get('wsd_cluster'):
+            self.train_cluster(X_train, y_train)
+        else:
+            self.train(X_train, y_train)
 
         # Evaluate model and return
         return self.evaluate(X_valid, y_valid)
@@ -140,7 +168,10 @@ class Gym:
             y_train = [self.y_train[i] for i in idxT]
             y_valid = [self.y_train[i] for i in idxV]
 
-            self.train(X_train, y_train)
+            if self._config.get('wsd_cluster'):
+                self.train_cluster(X_train, y_train)
+            else:
+                self.train(X_train, y_train)
             score: float = self.evaluate(X_valid, y_valid)
             if verbose:
                 print("- Accuracy: {:.4f}%".format(score*100))

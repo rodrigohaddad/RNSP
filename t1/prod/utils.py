@@ -30,12 +30,12 @@ class Binarizer():
     def simple_thermometer(self, arr: np.ndarray, minimum: int = 0, maximum: int = 255, resolution: int = 25) -> list:
         therm = ThermometerEncoder(
             maximum=maximum, minimum=minimum, resolution=resolution)
-        return [therm.encode(x).flatten() for x in arr]
+        return [np.uint8(therm.encode(x)).flatten() for x in arr]
 
     def circular_thermometer(self, arr: np.ndarray, minimum: int = 0, maximum: int = 255, resolution: int = 20) -> list:
         therm = CircularThermometerEncoder(
             maximum=maximum, minimum=minimum, resolution=resolution)
-        return [therm.encode(x).flatten() for x in arr]
+        return [np.uint8(therm.encode(x)).flatten() for x in arr]
 
     def sauvola(self, arr: np.ndarray, window_size: int = 11) -> list:
         bin_imgs = list()

@@ -50,6 +50,26 @@ class Gym:
                     self.X_train, resolution=self._config["binarization_resolution"])
                 self.X_test_binary = binarizer.circular_thermometer(
                     self.X_test, resolution=self._config["binarization_resolution"])
+            elif self._config["binarization"] == "sauvola":
+                self.X_train_binary = binarizer.sauvola(
+                    self.X_train, window_size=self._config["window_size"])
+                self.X_test_binary = binarizer.sauvola(
+                    self.X_test, window_size=self._config["window_size"])
+            elif self._config["binarization"] == "niblack":
+                self.X_train_binary = binarizer.niblack(
+                    self.X_train, window_size=self._config["window_size"])
+                self.X_test_binary = binarizer.niblack(
+                    self.X_test, window_size=self._config["window_size"])
+            elif self._config["binarization"] == "adaptive_thresh_mean":
+                self.X_train_binary = binarizer.adaptive_thresh_mean(
+                    self.X_train, window_size=self._config["window_size"])
+                self.X_test_binary = binarizer.adaptive_thresh_mean(
+                    self.X_test, window_size=self._config["window_size"])
+            elif self._config["binarization"] == "adaptive_thresh_gaussian":
+                self.X_train_binary = binarizer.adaptive_thresh_gaussian(
+                    self.X_train, window_size=self._config["window_size"])
+                self.X_test_binary = binarizer.adaptive_thresh_gaussian(
+                    self.X_test, window_size=self._config["window_size"])
             else:
                 raise Exception(
                     f'Binarization type {self._config["binarization"]} unknown.')

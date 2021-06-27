@@ -10,7 +10,9 @@ DEFAULT_WSD_IGNORE_ZERO = False
 DEFAULT_WSD_VERBOSE = False
 
 # Parameters
-BINARIZATION_OPTIONS = ["threshold", "sauvola", "niblack", "thermometer", "circular_thermometer"]
+BINARIZATION_OPTIONS = ["threshold", "sauvola", "niblack", "thermometer", 
+                        "circular_thermometer", "adaptive_thresh_gaussian",
+                        "adaptive_thresh_mean"]
 BINARIZATION_THRESHOLDS = [32, 64, 128, 192]
 BINARIZATION_RESOLUTIONS = [16, 32, 64]
 NS_WINDOW = [3, 5, 7, 9, 11]
@@ -35,7 +37,7 @@ base_cfg = {
     "clus_min_score": 0.1,
     "clus_threshold": 0,
     "clus_discriminator_limit": 0,
-    "ns_window": 3,
+    "window_size": 3,
 }
 
 
@@ -90,14 +92,14 @@ for binarization_option in BINARIZATION_OPTIONS:
                     else:
                         save_config(i, cfg)
                         i += 1
-    elif binarization_option in ["sauvola", "niblack"]:
+    elif binarization_option in ["sauvola", "niblack", "adaptive_thresh_mean", "adaptive_thresh_gaussian"]:
         for window_size in NS_WINDOW:
             for address_size in ADDRESS_SIZES:
                 for wsd_clus in WSD_CLUSTER:
                     cfg = deepcopy(base_cfg)
                     cfg["wsd_cluster"] = wsd_clus
                     cfg["binarization"] = binarization_option
-                    cfg["ns_window"] = window_size
+                    cfg["window_size"] = window_size
                     cfg["wsd_address_size"] = address_size
                     if wsd_clus:   
                         for clus_t in CLUS_THRESHOLD:

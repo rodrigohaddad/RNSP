@@ -2,6 +2,7 @@ from encoders import ThermometerEncoder, CircularThermometerEncoder
 
 from os import path
 
+import cv2 as cv
 import numpy as np
 from skimage.filters import threshold_niblack, threshold_sauvola
 
@@ -52,3 +53,9 @@ class Binarizer():
             binary_n = np.array( x > thresh_n, dtype=int)
             bin_imgs.append(binary_n.flatten())
         return bin_imgs
+
+    def adaptive_thresh_mean(self, arr: np.ndarray, window_size: int = 11) -> list:
+        return [cv.adaptiveThreshold(x, 1, cv.ADAPTIVE_THRESH_MEAN_C, cv.THRESH_BINARY, window_size, 2).flatten() for x in arr] 
+
+    def adaptive_thresh_gaussian(self, arr: np.ndarray, window_size: int = 11) -> list:
+        return [cv.adaptiveThreshold(x, 1, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, window_size, 2).flatten() for x in arr] 

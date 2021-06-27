@@ -21,6 +21,7 @@ ADDRESS_SIZES = [15, 16, 17, 18, 19,
                 25, 26, 27, 28, 29]
 WSD_CLUSTER = [True, False]
 CONSTANT_C = [1, 2, 3, 4]
+CONSTANT_K = [0.2, 0.4, 0.6, 0.8]
 
 CLUS_THRESHOLD = [1, 2, 3, 5, 10, 15, 20, 30]
 CLUS_DISCRIMINATOR_LIMIT = [1, 2, 3, 5, 10, 15, 20, 30]
@@ -42,6 +43,7 @@ base_cfg = {
     "clus_discriminator_limit": 0,
     "window_size": 3,
     "constant_c": 2,
+    "constant_k": 0.2,
 }
 
 
@@ -96,7 +98,7 @@ for binarization_option in BINARIZATION_OPTIONS:
                     else:
                         save_config(i, cfg)
                         i += 1
-    elif binarization_option in ["sauvola", "niblack"]:
+    elif binarization_option == "sauvola":
         for window_size in NS_WINDOW:
             for address_size in ADDRESS_SIZES:
                 for wsd_clus in WSD_CLUSTER:
@@ -117,6 +119,29 @@ for binarization_option in BINARIZATION_OPTIONS:
                     else:
                         save_config(i, cfg)
                         i += 1
+    elif binarization_option == "niblack":
+        for window_size in NS_WINDOW:
+            for constant_k in CONSTANT_K:
+                for address_size in ADDRESS_SIZES:
+                    for wsd_clus in WSD_CLUSTER:
+                        cfg = deepcopy(base_cfg)
+                        cfg["wsd_cluster"] = wsd_clus
+                        cfg["binarization"] = binarization_option
+                        cfg["window_size"] = window_size
+                        cfg["constant_k"] = constant_k
+                        cfg["wsd_address_size"] = address_size
+                        if wsd_clus:   
+                            for clus_t in CLUS_THRESHOLD:
+                                for clus_d in CLUS_DISCRIMINATOR_LIMIT: 
+                                    for clus_m in CLUS_MIN_SCORE:
+                                        cfg["clus_min_score"] = clus_m
+                                        cfg["clus_threshold"] = clus_t
+                                        cfg["clus_discriminator_limit"] = clus_d
+                                        save_config(i, cfg)
+                                        i += 1
+                        else:
+                            save_config(i, cfg)
+                            i += 1
     elif binarization_option in ["adaptive_thresh_mean", "adaptive_thresh_gaussian"]:
         for window_size in NS_WINDOW:
             for address_size in ADDRESS_SIZES:

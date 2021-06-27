@@ -16,12 +16,14 @@ BINARIZATION_OPTIONS = ["threshold", "sauvola", "niblack", "thermometer",
 BINARIZATION_THRESHOLDS = [32, 64, 128, 192]
 BINARIZATION_RESOLUTIONS = [16, 32, 64]
 NS_WINDOW = [3, 5, 7, 9, 11]
-ADDRESS_SIZES = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+ADDRESS_SIZES = [15, 16, 17, 18, 19, 
+                20, 21, 22, 23, 24, 
+                25, 26, 27, 28, 29]
 WSD_CLUSTER = [True, False]
 CONSTANT_C = [1, 2, 3, 4]
 
-CLUS_THRESHOLD = [1, 2, 3, 5, 10, 15, 20]
-CLUS_DISCRIMINATOR_LIMIT = [1, 2, 3, 5, 10, 15, 20]
+CLUS_THRESHOLD = [1, 2, 3, 5, 10, 15, 20, 30]
+CLUS_DISCRIMINATOR_LIMIT = [1, 2, 3, 5, 10, 15, 20, 30]
 CLUS_MIN_SCORE = [0.1, 0.2, 0.3, 0.4, 0.5]
 
 base_cfg = {

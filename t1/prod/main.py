@@ -62,14 +62,18 @@ class Gym:
                     self.X_test, window_size=self._config["window_size"])
             elif self._config["binarization"] == "adaptive_thresh_mean":
                 self.X_train_binary = binarizer.adaptive_thresh_mean(
-                    self.X_train, window_size=self._config["window_size"])
+                    self.X_train, window_size=self._config["window_size"], 
+                    constant_c=self._config["constant_c"])
                 self.X_test_binary = binarizer.adaptive_thresh_mean(
-                    self.X_test, window_size=self._config["window_size"])
+                    self.X_test, window_size=self._config["window_size"], 
+                    constant_c=self._config["constant_c"])
             elif self._config["binarization"] == "adaptive_thresh_gaussian":
                 self.X_train_binary = binarizer.adaptive_thresh_gaussian(
-                    self.X_train, window_size=self._config["window_size"])
+                    self.X_train, window_size=self._config["window_size"], 
+                    constant_c=self._config["constant_c"])
                 self.X_test_binary = binarizer.adaptive_thresh_gaussian(
-                    self.X_test, window_size=self._config["window_size"])
+                    self.X_test, window_size=self._config["window_size"], 
+                    constant_c=self._config["constant_c"])
             else:
                 raise Exception(
                     f'Binarization type {self._config["binarization"]} unknown.')

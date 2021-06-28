@@ -10,15 +10,22 @@ DEFAULT_WSD_IGNORE_ZERO = False
 DEFAULT_WSD_VERBOSE = False
 
 # Parameters
-BINARIZATION_OPTIONS = ["threshold", "sauvola", "niblack", "thermometer", 
-                        "circular_thermometer", "adaptive_thresh_gaussian",
-                        "adaptive_thresh_mean"]
+BINARIZATION_OPTIONS = [
+    "threshold",
+    "thermometer",
+    "circular_thermometer",
+    "sauvola",
+    "niblack",
+    "adaptive_thresh_gaussian",
+    "adaptive_thresh_mean"
+]
 BINARIZATION_THRESHOLDS = [32, 64, 128]
 BINARIZATION_RESOLUTIONS = [5, 10]
 NS_WINDOW = [7, 9, 11]
 ADDRESS_SIZES = [3, 5, 10, 15, 20, 
                 25, 28, 30]
 WSD_CLUSTER = [True, False]
+
 CONSTANT_C = [1, 2, 3, 4]
 CONSTANT_K = [0.2, 0.4, 0.6, 0.8]
 
@@ -64,15 +71,15 @@ for binarization_option in BINARIZATION_OPTIONS:
                     cfg["binarization"] = binarization_option
                     cfg["binarization_threshold"] = binarization_threshold
                     cfg["wsd_address_size"] = address_size
-                    if wsd_clus:   
+                    if wsd_clus:
                         for clus_t in CLUS_THRESHOLD:
-                           for clus_d in CLUS_DISCRIMINATOR_LIMIT: 
-                               for clus_m in CLUS_MIN_SCORE:
-                                   cfg["clus_min_score"] = clus_m
-                                   cfg["clus_threshold"] = clus_t
-                                   cfg["clus_discriminator_limit"] = clus_d
-                                   save_config(i, cfg)
-                                   i += 1
+                            for clus_d in CLUS_DISCRIMINATOR_LIMIT:
+                                for clus_m in CLUS_MIN_SCORE:
+                                    cfg["clus_min_score"] = clus_m
+                                    cfg["clus_threshold"] = clus_t
+                                    cfg["clus_discriminator_limit"] = clus_d
+                                    save_config(i, cfg)
+                                    i += 1
                     else:
                         save_config(i, cfg)
                         i += 1
@@ -85,15 +92,15 @@ for binarization_option in BINARIZATION_OPTIONS:
                     cfg["binarization"] = binarization_option
                     cfg["binarization_threshold"] = binarization_threshold
                     cfg["wsd_address_size"] = address_size
-                    if wsd_clus:   
+                    if wsd_clus:
                         for clus_t in CLUS_THRESHOLD:
-                           for clus_d in CLUS_DISCRIMINATOR_LIMIT: 
-                               for clus_m in CLUS_MIN_SCORE:
-                                   cfg["clus_min_score"] = clus_m
-                                   cfg["clus_threshold"] = clus_t
-                                   cfg["clus_discriminator_limit"] = clus_d
-                                   save_config(i, cfg)
-                                   i += 1
+                            for clus_d in CLUS_DISCRIMINATOR_LIMIT:
+                                for clus_m in CLUS_MIN_SCORE:
+                                    cfg["clus_min_score"] = clus_m
+                                    cfg["clus_threshold"] = clus_t
+                                    cfg["clus_discriminator_limit"] = clus_d
+                                    save_config(i, cfg)
+                                    i += 1
                     else:
                         save_config(i, cfg)
                         i += 1
@@ -106,15 +113,15 @@ for binarization_option in BINARIZATION_OPTIONS:
                     cfg["binarization"] = binarization_option
                     cfg["window_size"] = window_size
                     cfg["wsd_address_size"] = address_size
-                    if wsd_clus:   
+                    if wsd_clus:
                         for clus_t in CLUS_THRESHOLD:
-                           for clus_d in CLUS_DISCRIMINATOR_LIMIT: 
-                               for clus_m in CLUS_MIN_SCORE:
-                                   cfg["clus_min_score"] = clus_m
-                                   cfg["clus_threshold"] = clus_t
-                                   cfg["clus_discriminator_limit"] = clus_d
-                                   save_config(i, cfg)
-                                   i += 1
+                            for clus_d in CLUS_DISCRIMINATOR_LIMIT:
+                                for clus_m in CLUS_MIN_SCORE:
+                                    cfg["clus_min_score"] = clus_m
+                                    cfg["clus_threshold"] = clus_t
+                                    cfg["clus_discriminator_limit"] = clus_d
+                                    save_config(i, cfg)
+                                    i += 1
                     else:
                         save_config(i, cfg)
                         i += 1
@@ -129,9 +136,9 @@ for binarization_option in BINARIZATION_OPTIONS:
                         cfg["window_size"] = window_size
                         cfg["constant_k"] = constant_k
                         cfg["wsd_address_size"] = address_size
-                        if wsd_clus:   
+                        if wsd_clus:
                             for clus_t in CLUS_THRESHOLD:
-                                for clus_d in CLUS_DISCRIMINATOR_LIMIT: 
+                                for clus_d in CLUS_DISCRIMINATOR_LIMIT:
                                     for clus_m in CLUS_MIN_SCORE:
                                         cfg["clus_min_score"] = clus_m
                                         cfg["clus_threshold"] = clus_t
@@ -152,9 +159,9 @@ for binarization_option in BINARIZATION_OPTIONS:
                         cfg["window_size"] = window_size
                         cfg["wsd_address_size"] = address_size
                         cfg["constant_c"] = constant_c
-                        if wsd_clus:   
+                        if wsd_clus:
                             for clus_t in CLUS_THRESHOLD:
-                                for clus_d in CLUS_DISCRIMINATOR_LIMIT: 
+                                for clus_d in CLUS_DISCRIMINATOR_LIMIT:
                                     for clus_m in CLUS_MIN_SCORE:
                                         cfg["clus_min_score"] = clus_m
                                         cfg["clus_threshold"] = clus_t

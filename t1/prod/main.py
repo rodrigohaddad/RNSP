@@ -57,24 +57,24 @@ class Gym:
                     self.X_test, window_size=self._config["window_size"])
             elif self._config["binarization"] == "niblack":
                 self.X_train_binary = binarizer.niblack(
-                    self.X_train, window_size=self._config["window_size"], 
+                    self.X_train, window_size=self._config["window_size"],
                     k=self._config["constant_k"])
                 self.X_test_binary = binarizer.niblack(
                     self.X_test, window_size=self._config["window_size"],
-                     k=self._config["constant_k"])
+                    k=self._config["constant_k"])
             elif self._config["binarization"] == "adaptive_thresh_mean":
                 self.X_train_binary = binarizer.adaptive_thresh_mean(
-                    self.X_train, window_size=self._config["window_size"], 
+                    self.X_train, window_size=self._config["window_size"],
                     constant_c=self._config["constant_c"])
                 self.X_test_binary = binarizer.adaptive_thresh_mean(
-                    self.X_test, window_size=self._config["window_size"], 
+                    self.X_test, window_size=self._config["window_size"],
                     constant_c=self._config["constant_c"])
             elif self._config["binarization"] == "adaptive_thresh_gaussian":
                 self.X_train_binary = binarizer.adaptive_thresh_gaussian(
-                    self.X_train, window_size=self._config["window_size"], 
+                    self.X_train, window_size=self._config["window_size"],
                     constant_c=self._config["constant_c"])
                 self.X_test_binary = binarizer.adaptive_thresh_gaussian(
-                    self.X_test, window_size=self._config["window_size"], 
+                    self.X_test, window_size=self._config["window_size"],
                     constant_c=self._config["constant_c"])
             else:
                 raise Exception(
@@ -124,11 +124,12 @@ class Gym:
 
         # Build Wisard model
         try:
-            address_size=self._config["clus_address_size"]
-            min_score=self._config["clus_min_score"]
-            threshold=self._config["clus_threshold"]
-            discriminator_limit=self._config["clus_discriminator_limit"]
-            self._model = wp.ClusWisard(address_size, min_score, threshold, discriminator_limit)
+            address_size = self._config["clus_address_size"]
+            min_score = self._config["clus_min_score"]
+            threshold = self._config["clus_threshold"]
+            discriminator_limit = self._config["clus_discriminator_limit"]
+            self._model = wp.ClusWisard(
+                address_size, min_score, threshold, discriminator_limit)
         except Exception as e:
             print(f"Fail on building wisard cluster model: {e}")
 
@@ -213,5 +214,6 @@ if __name__ == "__main__":
         raise IndexError("Please provide the path to the configuration file")
     db = DBManager()
     g = Gym(config_file_path)
-    acc = g.train_with_kfold()
-    db.add_train_result(g.config, acc)
+    val_acc = g.train_with_kfold()
+    test_acc = g.evaluate(g.X_test_binary, g.y_test)
+    db.add_train_result(g.config, val_accuracy=val_acc, test_accuracy=test_acc)

@@ -16,6 +16,7 @@ class TrainTable(Base):
 
     # Columns
     id = Column(Integer, primary_key=True)
+    wsd_cluster = Column(Boolean)
     random_seed = Column(Integer)
     train_validation_split = Column(Float)
     train_folds = Column(Integer)
@@ -25,7 +26,14 @@ class TrainTable(Base):
     wsd_address_size = Column(Integer)
     wsd_ignore_zero = Column(Boolean)
     wsd_verbose = Column(Boolean)
-    accuracy = Column(Float)
+    clus_min_score = Column(Float)
+    clus_threshold = Column(Integer)
+    clus_discriminator_limit = Column(Integer)
+    window_size = Column(Integer)
+    constant_c = Column(Float)
+    constant_k = Column(Float)
+    val_accuracy = Column(Float)
+    test_accuracy = Column(Float)
 
     def __repr__(self) -> str:
         return "<Wisard Train (accuracy={}, address_size={}, binarization={}, binarization_threshold={}, binarization_resolution={})>".format(
@@ -46,9 +54,10 @@ class DBManager:
 
         self._session: Session = sessionmaker(bind=self._engine)()
 
-    def add_train_result(self, config: dict, accuracy: float):
+    def add_train_result(self, config: dict, val_accuracy: float, test_accuracy: float):
         train_result = TrainTable(
-            accuracy=accuracy,
+            val_accuracy=val_accuracy,
+            test_accuracy=test_accuracy,
             **config
         )
         self._session.add(train_result)

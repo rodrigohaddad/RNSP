@@ -124,7 +124,7 @@ class Gym:
 
         # Build Wisard model
         try:
-            address_size = self._config["clus_address_size"]
+            address_size = self._config["wsd_address_size"]
             min_score = self._config["clus_min_score"]
             threshold = self._config["clus_threshold"]
             discriminator_limit = self._config["clus_discriminator_limit"]

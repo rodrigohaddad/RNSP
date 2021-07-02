@@ -1,0 +1,18 @@
+{
+  "wsd_cluster": false,
+  "random_seed": 8080,
+  "train_validation_split": 0.2,
+  "train_folds": 10,
+  "binarization": "threshold",
+  "binarization_threshold": 128,
+  "binarization_resolution": 20,
+  "wsd_address_size": 20,
+  "wsd_ignore_zero": false,
+  "wsd_verbose": false,
+  "clus_min_score": 0.1,
+  "clus_threshold": 0,
+  "clus_discriminator_limit": 0,
+  "window_size": 3,
+  "constant_c": 2,
+  "constant_k": 0.2
+}

@@ -1,2 +1,2 @@
 # RNSP
-Weightless neural network experiments and homeworks
+Weightless neural network experiments
